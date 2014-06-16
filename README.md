@@ -1,2 +1,11 @@
-usage: python merge_caption.py dir caption1 caption2
-Example: python merge_caption.py /Users/sliva/Movies/ The.Wolf.of.Wall.Street.2013.DVDScr.x264-HaM.eng.srt The.Wolf.of.Wall.Street.2013.DVDScr.x264-HaM.chs.srt
+#####MergeCaption
+
+Merge 2 caption files to support displaying 2 captions simultaneously on Mac video players
+
+Run the following command:
+
+	python merge_caption.py
+
+Then 2 different merged cpation files are generated. Check which one works for your player. 
+
+The tool have been tested on Splayer and VLC.

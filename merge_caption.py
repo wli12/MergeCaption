@@ -1,41 +1,37 @@
+import tkFileDialog
 import sys
 
-'''
-dir = '/Users/sliva/Movies/'
-fen = "The.Wolf.of.Wall.Street.2013.DVDScr.x264-HaM.eng.srt"
-fch = "The.Wolf.of.Wall.Street.2013.DVDScr.x264-HaM.chs.srt"
-fout = "The.Wolf.of.Wall.Street.2013.DVDScr.x264-HaM.ench.srt"
-fen = open(dir + fen)
-fch = open(dir + fch)
-fout = open(dir + fout, 'w')
-'''
 
-if len(sys.argv) < 4:
-    print 'usage: python '+sys.argv[0]+' dir caption1 caption2\n'+\
-          'Example: python '+sys.argv[0]+' /Users/sliva/Movies/ The.Wolf.of.Wall.Street.2013.DVDScr.x264-HaM.eng.srt The.Wolf.of.Wall.Street.2013.DVDScr.x264-HaM.chs.srt'
+f = tkFileDialog.askopenfiles(mode='r')
+if len(f) != 2:
+    print 'Please choose 2 files.\n'
     sys.exit()
 
-d = sys.argv[1]
-s = sys.argv[2]
-fen = open(d+s)
-fch = open(d+sys.argv[3])
-fout = open(d+s[:s.rfind('.')]+'_new'+s[s.rfind('.'):], 'w')
-s = fen.readline()
-fch.readline()
-while s:
-    print >>fout, s,
-    print >>fout, fen.readline(),
-    fch.readline()
-    s = fen.readline()
-    while s and not s.strip().isdigit():
-        if s != '\r\n':
-            print >>fout, s,
-        s = fen.readline()
+fa = f[0]
+fb = f[1]
+s = fa.name
 
-    s = fch.readline()
-    while s and not s.strip().isdigit():
-        print >>fout, s,
-        s = fch.readline()
+fvlc = open(s[:s.rfind('.')]+'_vlc'+s[s.rfind('.'):], 'w')
+fsp = open(s[:s.rfind('.')]+'_splayer'+s[s.rfind('.'):], 'w')
 
+fsp.write(fa.read())
+fsp.write(fb.read())
+fa.seek(0)
+fb.seek(0)
 
+line = fa.readline()
+fb.readline()
+while line:
+    print >>fvlc, line,
+    print >>fvlc, fa.readline(),
+    fb.readline()
+    line = fa.readline()
+    while line and not line.strip().isdigit():
+        if line != '\r\n':
+            print >>fvlc, line,
+        line = fa.readline()
 
+    line = fb.readline()
+    while line and not line.strip().isdigit():
+        print >>fvlc, line,
+        line = fb.readline()
